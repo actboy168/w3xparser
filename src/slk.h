@@ -256,7 +256,7 @@ namespace w3x {
 			}
 			while (!equal(z, '\0')) {
 				if (!parse_whitespace_and_newline()) {
-					return false;
+					return error("'\\n' expected near '%c'", *z);
 				}
 				if (!parse_line()) {
 					return false;

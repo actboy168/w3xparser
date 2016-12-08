@@ -96,7 +96,7 @@ namespace w3x {
 	bool consume_str(const char*& p, const char(&c)[n])
 	{
 		if (equal_str(p, c)) {
-			p += n;
+			p += n - 1;
 			return true;
 		}
 		return false;
