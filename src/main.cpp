@@ -31,9 +31,15 @@ namespace w3x
 		}
 		lua_createtable(L, 0, l.maxy);
 		for (size_t y = 1; y < l.maxy; ++y) {
+			if (l.col[y].empty()) {
+				continue;
+			}
 			lua_pushlstring(L, l.col[y].data(), l.col[y].size());
 			lua_createtable(L, 0, l.maxx);
 			for (size_t x = 1; x < l.maxx; ++x) {
+				if (l.row[x].empty()) {
+					continue;
+				}
 				lua_pushlstring(L, l.row[x].data(), l.row[x].size());
 				auto& data = l.data[x][y];
 				if (is_string(data)) {
