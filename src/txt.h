@@ -86,15 +86,75 @@ namespace w3x {
 			}
 		}
 
-		bool parse_value()
+		bool parse_string_1()
 		{
 			const char* p = z;
 			for (;; z++) {
 				switch (*z) {
+				case '"':
+					accept_value(p, z - p);
+					return true;
 				case '\n':
 				case '\r':
 				case '\0':
 					accept_value(p, z - p);
+					return false;
+				}
+			}
+		}
+
+		bool parse_string_2()
+		{
+			const char* p = z;
+			for (;; z++) {
+				switch (*z) {
+				case ',':
+					accept_value(p, z - p);
+					return true;
+				case '\n':
+				case '\r':
+				case '\0':
+					accept_value(p, z - p);
+					return false;
+				}
+			}
+		}
+
+		bool parse_value()
+		{
+			accept_value_begin();
+			const char* p = z;
+			bool has_empty = true;
+			for (;; z++) {
+				switch (*z) {
+				case '"':
+					z++;
+					if (!parse_string_1()) {
+						accept_value_end();
+						return true;
+					}
+					p = z + 1;
+					has_empty = false;
+					break;
+				default:
+					if (!parse_string_2()) {
+						accept_value_end();
+						return true;
+					}
+					p = z + 1;
+					break;
+				case ',':
+					if (has_empty || z - p > 0)
+						accept_value(p, z - p);
+					p = z + 1;
+					has_empty = true;
+					break;
+				case '\n':
+				case '\r':
+				case '\0':
+					if (z - p > 0)
+						accept_value(p, z - p);
+					accept_value_end();
 					return true;
 				}
 			}
@@ -166,8 +226,15 @@ namespace w3x {
 		void accept_section(const char* str, size_t len)
 		{
 			lua_pop(l, 1);
-			lua_newtable(l);
 			lua_pushlstring(l, str, len);
+			lua_pushvalue(l, -1);
+			if (LUA_TTABLE == lua_rawget(l, -3)) {
+				lua_remove(l, -2);
+				return;
+			}
+			lua_pop(l, 1);
+			lua_newtable(l);
+			lua_insert(l, -2);
 			lua_pushvalue(l, -2);
 			lua_rawset(l, -4);
 		}
@@ -177,10 +244,22 @@ namespace w3x {
 			lua_pushlstring(l, str, len);
 		}
 
+		size_t n = 0;
+		void accept_value_begin()
+		{
+			lua_newtable(l);
+			n = 0;
+		}
+
+		void accept_value_end()
+		{
+			lua_rawset(l, -3);
+		}
+
 		void accept_value(const char* str, size_t len)
 		{
 			lua_pushlstring(l, str, len);
-			lua_rawset(l, -3);
+			lua_rawseti(l, -2, ++n);
 		}
 	};
 }
