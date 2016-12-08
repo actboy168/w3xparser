@@ -244,9 +244,15 @@ namespace w3x {
 			lua_pushlstring(l, str, len);
 		}
 
-		size_t n = 0;
+		lua_Integer n = 0;
 		void accept_value_begin()
 		{
+			lua_pushvalue(l, -1);
+			if (LUA_TTABLE == lua_rawget(l, -3)) {
+				n = luaL_len(l, -1);
+				return;
+			}
+			lua_pop(l, 1);
 			lua_newtable(l);
 			n = 0;
 		}
