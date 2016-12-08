@@ -18,7 +18,7 @@ namespace w3x
 
 	int parse_slk(lua_State* L)
 	{
-		slk l(luaL_checkstring(L, 1));
+		slk l(L, luaL_checkstring(L, 1));
 		const char* file = luaL_optstring(L, 2, "...");
 		if (!l.parse()) {
 			return luaL_error(L, "\n%s:%d: %s", file, (int)lua_tointeger(L, -2), lua_tostring(L, -1));

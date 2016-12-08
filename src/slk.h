@@ -24,8 +24,9 @@ namespace w3x {
 		uint32_t curx = 1;
 		uint32_t cury = 1;
 
-		slk(const char* input)
-			: z(input)
+		slk(lua_State* L, const char* input)
+			: l(L)
+			, z(input)
 		{ }
 
 		void incline()
