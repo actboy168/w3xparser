@@ -29,10 +29,10 @@ namespace w3x
 		for (size_t y = 0; y < l.maxy; ++y) {
 			is_string(l.col[y]);
 		}
-		lua_createtable(L, l.maxy, 0);
+		lua_createtable(L, 0, l.maxy);
 		for (size_t y = 1; y < l.maxy; ++y) {
 			lua_pushlstring(L, l.col[y].data(), l.col[y].size());
-			lua_createtable(L, l.maxx, 0);
+			lua_createtable(L, 0, l.maxx);
 			for (size_t x = 1; x < l.maxx; ++x) {
 				lua_pushlstring(L, l.row[x].data(), l.row[x].size());
 				auto& data = l.data[x][y];
