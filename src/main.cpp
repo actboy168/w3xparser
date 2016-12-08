@@ -1,4 +1,5 @@
 #include "slk.h" 
+#include "txt.h" 
 
 namespace w3x
 {
@@ -61,6 +62,16 @@ namespace w3x
 		}
 		return 1;
 	}
+
+	int parse_txt(lua_State* L)
+	{
+		txt l(L, luaL_checkstring(L, 1));
+		const char* file = luaL_optstring(L, 2, "...");
+		if (!l.parse()) {
+			return luaL_error(L, "\n%s:%d: %s", file, (int)lua_tointeger(L, -2), lua_tostring(L, -1));
+		}
+		return 1;
+	}
 }
 
 extern "C" __declspec(dllexport)
@@ -68,6 +79,7 @@ int luaopen_w3xparser(lua_State* L)
 {
 	static luaL_Reg l[] = {
 	    { "slk", w3x::parse_slk },
+		{ "txt", w3x::parse_txt },
 		{ NULL, NULL },
 	};
 	luaL_newlib(L, l);

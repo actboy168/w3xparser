@@ -18,5 +18,8 @@
     <ClInclude Include="..\src\common.h">
       <Filter>cpp</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\txt.h">
+      <Filter>cpp</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
