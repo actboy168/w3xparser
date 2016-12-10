@@ -3,6 +3,7 @@ package.cpath = package.cpath .. [[;.\..\bin\Debug\?.dll]]
 local w3xparser = require 'w3xparser'
 local slk = w3xparser.slk
 local txt = w3xparser.txt
+local ini = w3xparser.ini
 local print_r = require 'print_r'
 
 function io.load(filename)
@@ -34,10 +35,10 @@ local function EQUAL(a, b)
 end
 
 local n = 0
-local function TEST(script, t)
+local function TEST(type, script, t)
 	n = n + 1
 	local name = 'TEST-' .. n
-	local r = txt(script)
+	local r = w3xparser[type](script)
 	local ok, e = pcall(EQUAL, r, t)
 	if not ok then
 		print(script)
@@ -60,7 +61,7 @@ local function TEST(script, t)
 	end
 end
 
-TEST([[
+TEST('txt', [[
 [A]
 // [B]
  [C]
@@ -72,6 +73,21 @@ m=1
 ,
 {
   A = { [' k'] = {' 1 ','2'},  ['m'] = {'1'}  }
+}
+)
+
+TEST('ini', [[
+[A]
+// [B]
+ [C]
+ k= 1 
+[A]
+m=1
+ k=2
+]]
+,
+{
+  A = { [' k'] = ' 1 ',  ['m'] = '1' }
 }
 )
 
@@ -121,7 +137,7 @@ local list = {
 }
 
 for _, test in ipairs(list) do
-	TEST('[a]\nb=' .. test[1], {a={b=test[2]}})
+	TEST('txt', '[a]\nb=' .. test[1], {a={b=test[2]}})
 end
 
 print('test ok!')

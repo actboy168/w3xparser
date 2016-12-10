@@ -21,5 +21,8 @@
     <ClInclude Include="..\src\txt.h">
       <Filter>cpp</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\ini.h">
+      <Filter>cpp</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
