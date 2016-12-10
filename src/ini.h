@@ -86,8 +86,37 @@ namespace w3x {
 			}
 		}
 
+		bool parse_string()
+		{
+			const char* p = z;
+			for (;; z++) {
+				switch (*z) {
+				case '"':
+					accept_value(p, z - p);
+					for (;; z++) {
+						switch (*z) {
+						case '\n':
+						case '\r':
+						case '\0':
+							return true;
+						}
+					}
+					return true;
+				case '\n':
+				case '\r':
+				case '\0':
+					accept_value(p, z - p);
+					return true;
+				}
+			}
+		}
+
 		bool parse_value()
 		{
+			if (*z == '"') {
+				z++;
+				return parse_string();
+			}
 			const char* p = z;
 			for (;; z++) {
 				switch (*z) {
