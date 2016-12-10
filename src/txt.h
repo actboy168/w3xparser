@@ -14,6 +14,7 @@ namespace w3x {
 		lua_State* l;
 		const char* z;
 		int line = 1;
+		std::vector<char> tmp;
 
 		txt(lua_State* L, const char* input)
 			: l(L)
@@ -241,7 +242,10 @@ namespace w3x {
 
 		void accept_key(const char* str, size_t len)
 		{
-			lua_pushlstring(l, str, len);
+			tmp.resize(len);
+			for (size_t i = 0; i < len; ++i)
+				tmp[i] = tolower((unsigned char)str[i]);
+			lua_pushlstring(l, tmp.data(), tmp.size());
 		}
 
 		lua_Integer n = 0;

@@ -12,7 +12,7 @@ namespace w3x {
 
 	struct slk {
 		std::vector<std::string_view> col;
-		std::vector<std::string_view> row;
+		std::vector<std::vector<char>> row;
 		std::vector<std::vector<std::string_view>> data;
 
 		lua_State* l;
@@ -193,7 +193,12 @@ namespace w3x {
 						}
 					}
 					else if (cury == 1) {
-						row[curx - 1] = s;
+						if (!s.empty() && s.front() == '"') s.remove_prefix(1);
+						if (!s.empty() && s.back() == '"') s.remove_suffix(1);
+						auto& rowx = row[curx - 1];
+						rowx.resize(s.size());
+						for (size_t i = 0; i < s.size(); ++i)
+							rowx[i] = tolower((unsigned char)s[i]);
 					}
 					else {
 						data[curx - 1][cury - 1] = s;

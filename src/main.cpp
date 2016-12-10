@@ -25,9 +25,6 @@ namespace w3x
 		if (!l.parse()) {
 			return luaL_error(L, "\n%s:%d: %s", file, (int)lua_tointeger(L, -2), lua_tostring(L, -1));
 		}
-		for (size_t x = 0; x < l.maxx; ++x) {
-			is_string(l.row[x]);
-		}
 		for (size_t y = 0; y < l.maxy; ++y) {
 			is_string(l.col[y]);
 		}
