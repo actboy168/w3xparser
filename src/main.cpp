@@ -1,5 +1,6 @@
 #include "slk.h" 
 #include "txt.h" 
+#include "ini.h" 
 
 namespace w3x
 {
