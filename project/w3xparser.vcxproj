@@ -17,6 +17,7 @@
     <ClInclude Include="..\src\common.h" />
     <ClInclude Include="..\src\ini.h" />
     <ClInclude Include="..\src\slk.h" />
+    <ClInclude Include="..\src\tonumber.h" />
     <ClInclude Include="..\src\txt.h" />
   </ItemGroup>
   <ItemGroup>

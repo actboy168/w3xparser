@@ -1,6 +1,7 @@
 #include "slk.h" 
 #include "txt.h" 
 #include "ini.h" 
+#include "tonumber.h" 
 
 namespace w3x
 {
@@ -80,6 +81,13 @@ namespace w3x
 		}
 		return 1;
 	}
+
+	int tonumber(lua_State* L)
+	{
+		number l(L, luaL_checkstring(L, 1));
+		l.parse();
+		return 1;
+	}
 }
 
 extern "C" __declspec(dllexport)
@@ -89,6 +97,7 @@ int luaopen_w3xparser(lua_State* L)
 	    { "slk", w3x::parse_slk },
 		{ "txt", w3x::parse_txt },
 		{ "ini", w3x::parse_ini },
+		{ "tonumber", w3x::tonumber },
 		{ NULL, NULL },
 	};
 	luaL_newlib(L, l);

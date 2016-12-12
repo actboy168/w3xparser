@@ -24,5 +24,8 @@
     <ClInclude Include="..\src\ini.h">
       <Filter>cpp</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\tonumber.h">
+      <Filter>cpp</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

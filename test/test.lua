@@ -140,4 +140,25 @@ for _, test in ipairs(list) do
 	TEST('txt', '[a]\nb=' .. test[1], {a={b=test[2]}})
 end
 
+local tonumber = w3xparser.tonumber
+assert(tonumber('0.1') == 0.1)
+assert(tonumber('.1') == 0.1)
+assert(tonumber(' .1') == 0.1)
+assert(tonumber('a.1') == 0)
+assert(tonumber('10') == 10)
+assert(tonumber('010') == 8)
+assert(tonumber('0x10') == 16)
+assert(tonumber(' 10') == 10)
+assert(tonumber(' 010') == 8)
+assert(tonumber(' 0x10') == 16)
+assert(tonumber("'a'") == 97)
+assert(tonumber("'abcd'") == 1633837924)
+assert(tonumber("'abcde'") == 0)
+assert(tonumber(" 'a'") == 0)
+assert(tonumber('0.1 a') == 0.1)
+assert(tonumber('0.1a') == 0.1)
+assert(tonumber(' 10 1') == 10)
+assert(tonumber(' 10 //test') == 10)
+
+
 print('test ok!')
