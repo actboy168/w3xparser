@@ -66,6 +66,9 @@ namespace w3x
 	{
 		txt l(L, luaL_checkstring(L, 1));
 		const char* file = luaL_optstring(L, 2, "...");
+		if (lua_gettop(L) < 3) {
+			lua_newtable(L);
+		}
 		if (!l.parse()) {
 			return luaL_error(L, "\n%s:%d: %s", file, (int)lua_tointeger(L, -2), lua_tostring(L, -1));
 		}

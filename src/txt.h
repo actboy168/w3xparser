@@ -216,7 +216,6 @@ namespace w3x {
 		void accept_begin()
 		{
 			lua_newtable(l);
-			lua_newtable(l);
 		}
 
 		void accept_end()
