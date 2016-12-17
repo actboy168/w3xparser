@@ -223,10 +223,18 @@ namespace w3x {
 			lua_pop(l, 1);
 		}
 
+		void push_lowerstring(const char* str, size_t len)
+		{
+			tmp.resize(len);
+			for (size_t i = 0; i < len; ++i)
+				tmp[i] = tolower((unsigned char)str[i]);
+			lua_pushlstring(l, tmp.data(), tmp.size());
+		}
+
 		void accept_section(const char* str, size_t len)
 		{
 			lua_pop(l, 1);
-			lua_pushlstring(l, str, len);
+			push_lowerstring(str, len);
 			lua_pushvalue(l, -1);
 			if (LUA_TTABLE == lua_rawget(l, -3)) {
 				lua_remove(l, -2);
@@ -241,10 +249,7 @@ namespace w3x {
 
 		void accept_key(const char* str, size_t len)
 		{
-			tmp.resize(len);
-			for (size_t i = 0; i < len; ++i)
-				tmp[i] = tolower((unsigned char)str[i]);
-			lua_pushlstring(l, tmp.data(), tmp.size());
+			push_lowerstring(str, len);
 		}
 
 		lua_Integer n = 0;
