@@ -61,22 +61,22 @@ local function TEST(type, script, t)
 	end
 end
 
-TEST('txt', [[
-[A]
+TEST('txt', [==[
+[A]]
 // [B]
  [C]
  k= 1 
 [A]
 m=1
  k=2
-]]
+]==]
 ,
 {
-  A = { [' k'] = {' 1 ','2'},  ['m'] = {'1'}  }
+  a = { [' k'] = {' 1 ','2'},  ['m'] = {'1'}  }
 }
 )
 
-TEST('ini', [[
+TEST('ini', [==[
 [A]
 // [B]
  [C]
@@ -84,7 +84,7 @@ TEST('ini', [[
 [A]
 m=1
  k=2
-]]
+]==]
 ,
 {
   A = { [' k'] = ' 1 ',  ['m'] = '1' }

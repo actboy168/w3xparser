@@ -45,6 +45,18 @@ namespace w3x {
 			}
 		}
 
+		void parse_newline()
+		{
+			for (;; z++) {
+				switch (*z) {
+				case '\n':
+				case '\r':
+				case '\0':
+					return;
+				}
+			}
+		}
+
 		template <class ... Args>
 		bool error(const char* fmt, const Args& ... args)
 		{
@@ -76,7 +88,7 @@ namespace w3x {
 				case ']':
 					accept_section(p, z - p);
 					z++;
-					parse_whitespace();
+					parse_newline();
 					return true;
 				case '\n':
 				case '\r':
