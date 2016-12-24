@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
+    <ClInclude Include="..\src\mdxopt.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\common.h" />

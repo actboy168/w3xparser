@@ -2,6 +2,7 @@
 #include "txt.h" 
 #include "ini.h" 
 #include "tonumber.h" 
+#include "mdxopt.h" 
 
 namespace w3x
 {
@@ -91,6 +92,17 @@ namespace w3x
 		l.parse();
 		return 1;
 	}
+
+	int mdxopt(lua_State* L)
+	{
+		size_t len = 0;
+		const char* buf = luaL_checklstring(L, 1, &len);
+		char* newbuf = (char*)lua_newuserdata(L, len);
+		memcpy(newbuf, buf, len);
+		mdx::opt(newbuf, len);
+		lua_pushlstring(L, newbuf, len);
+		return 1;
+	}
 }
 
 extern "C" __declspec(dllexport)
@@ -101,6 +113,7 @@ int luaopen_w3xparser(lua_State* L)
 		{ "txt", w3x::parse_txt },
 		{ "ini", w3x::parse_ini },
 		{ "tonumber", w3x::tonumber },
+		{ "mdxopt", w3x::mdxopt },
 		{ NULL, NULL },
 	};
 	luaL_newlib(L, l);
