@@ -198,7 +198,7 @@ namespace w3x {
 						auto& rowx = row[curx - 1];
 						rowx.resize(s.size());
 						for (size_t i = 0; i < s.size(); ++i)
-							rowx[i] = tolower((unsigned char)s[i]);
+							rowx[i] = (unsigned char)s[i];
 					}
 					else {
 						data[curx - 1][cury - 1] = s;
