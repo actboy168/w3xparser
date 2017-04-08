@@ -178,6 +178,9 @@ namespace w3x {
 					}
 					break;
 				case 'K': {
+					if (maxx == 0 || maxy == 0) {
+						return error("slk data corrupted.");
+					}
 					z++;
 					parse_whitespace();
 					const char* p = z;
@@ -235,9 +238,7 @@ namespace w3x {
 				data.assign(maxx, std::vector<std::string_view>(maxy));
 				return true;
 			case 'C':
-				if (maxx == 0) {
-					return error("slk data corrupted.");
-				}
+			case 'F':
 				return parse_line_c();
 			case 'E':
 				return true;
