@@ -10,7 +10,7 @@
     <ClCompile Include="..\src\main.cpp">
       <Filter>cpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\mdxopt.h">
+    <ClCompile Include="..\src\newio.cpp">
       <Filter>cpp</Filter>
     </ClCompile>
   </ItemGroup>
@@ -30,5 +30,6 @@
     <ClInclude Include="..\src\tonumber.h">
       <Filter>cpp</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\mdxopt.h" />
   </ItemGroup>
 </Project>
