@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
-    <ClCompile Include="..\src\newio.cpp" />
     <ClInclude Include="..\src\mdxopt.h" />
   </ItemGroup>
   <ItemGroup>
