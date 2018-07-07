@@ -124,6 +124,13 @@ namespace w3x {
 				case ',':
 					accept_value(p, z - p);
 					return true;
+				case '/':
+					if (z[1] == '/') {
+						accept_value(p, z - p);
+						parse_comment();
+						return false;
+					}
+					break;
 				case '\n':
 				case '\r':
 				case '\0':

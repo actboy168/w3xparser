@@ -65,7 +65,7 @@ TEST('txt', [==[
 [A]]
 // [B]
  [C]
- k= 1 
+ k= 1 // 1
 [A]
 m=1
  k=2
@@ -174,5 +174,6 @@ assert(bin2float(float2bin('10.123456789012345678901234567890')) == '10.123457')
 assert(bin2float(float2bin('0.1')) == '0.1')
 assert(bin2float(float2bin('.1')) == '0.1')
 assert(bin2float(float2bin('.1234567890')) == '0.123457')
+assert(bin2float(float2bin('0.99')) == '0.99')
 
 print('test ok!')
