@@ -2,7 +2,8 @@
 #include "txt.h" 
 #include "ini.h" 
 #include "tonumber.h" 
-#include "mdxopt.h" 
+#include "mdxopt.h"
+#include "real.h"
 
 namespace w3x
 {
@@ -103,6 +104,61 @@ namespace w3x
 		lua_pushlstring(L, newbuf, len);
 		return 1;
 	}
+
+	float str2float(const char* z)
+	{
+		for (bool ok = false; !ok;) {
+			switch (*z) {
+			case '\0':
+			case '\n':
+			case '\r':
+				return 0.f;
+			case '\t':
+			case ' ':
+				z++;
+				break;
+			default:
+				ok = true;
+				break;
+			}
+		}
+		errno = 0;
+		float f = strtof(z, NULL);
+		if (errno == ERANGE && (f == HUGE_VALF || f == -HUGE_VALF)) {
+			return 0.f;
+		}
+		return f;
+	}
+
+	int float2bin(lua_State* L)
+	{
+		size_t len = 0;
+		const char* str = luaL_checklstring(L, 1, &len);
+		char tmp[64] = { 0 };
+		if (len > 63) len = 63;
+		memcpy(tmp, str, len);
+		float f = str2float(tmp);
+		real_t r = to_real(f);
+		lua_pushlstring(L, (char*)&r, 4);
+		return 1;
+	}
+
+	int bin2float(lua_State* L)
+	{
+		size_t len = 0;
+		const char* str = luaL_checklstring(L, 1, &len);
+		if (len != 4) {
+			return luaL_error(L, "float bin size must be 4.");
+		}
+		float f = from_real(*(real_t*)str);
+		char tmp[64];
+		int tmplen = sprintf_s(tmp, "%f", f);
+		while (tmplen > 0 && tmp[tmplen - 1] == '0') {
+			tmplen--;
+		}
+		lua_pushlstring(L, tmp, tmplen);
+		return 1;
+	}
 }
 
 extern "C" __declspec(dllexport)
@@ -114,6 +170,8 @@ int luaopen_w3xparser(lua_State* L)
 		{ "ini", w3x::parse_ini },
 		{ "tonumber", w3x::tonumber },
 		{ "mdxopt", w3x::mdxopt },
+		{ "float2bin", w3x::float2bin },
+		{ "bin2float", w3x::bin2float },
 		{ NULL, NULL },
 	};
 	luaL_newlib(L, l);

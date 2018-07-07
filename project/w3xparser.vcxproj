@@ -12,11 +12,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\real.cpp">
+      <FloatingPointModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Strict</FloatingPointModel>
+      <FloatingPointModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Strict</FloatingPointModel>
+    </ClCompile>
     <ClInclude Include="..\src\mdxopt.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\common.h" />
     <ClInclude Include="..\src\ini.h" />
+    <ClInclude Include="..\src\real.h" />
     <ClInclude Include="..\src\slk.h" />
     <ClInclude Include="..\src\tonumber.h" />
     <ClInclude Include="..\src\txt.h" />
