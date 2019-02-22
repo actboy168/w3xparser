@@ -44,8 +44,15 @@ namespace w3x
 				}
 				lua_pushlstring(L, l.row[x].data(), l.row[x].size());
 				auto& data = l.data[x][y];
-				if (!data.empty()) {
+				if (is_string(data)) {
 					lua_pushlstring(L, data.data(), data.size());
+				}
+				else if (!data.empty()) {
+					lua_pushlstring(L, data.data(), data.size());
+					if (!lua_stringtonumber(L, lua_tostring(L, -1))) {
+						lua_pushinteger(L, 0);
+					}
+					lua_remove(L, -2);
 				}
 				else {
 					lua_pushnil(L);
