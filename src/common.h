@@ -1,6 +1,7 @@
 #pragma once 
 
 #include <assert.h>
+#include <ctype.h>
 #include <string_view>
 
 namespace w3x {
