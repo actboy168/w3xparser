@@ -1,28 +1,8 @@
-package.cpath = package.cpath .. [[;.\..\bin\Debug\?.dll]]
+package.path = [[.\test\?.lua]]
+package.cpath = [[.\build\msvc\bin\?.dll]]
 
 local w3xparser = require 'w3xparser'
-local slk = w3xparser.slk
-local txt = w3xparser.txt
-local ini = w3xparser.ini
 local print_r = require 'print_r'
-
-function io.load(filename)
-	local f, e = io.open(filename, "rb")
-	if f then
-		local content = f:read 'a'
-		f:close()
-		return content
-	else
-		return false, e
-	end
-end
-
-function LOAD(filename)
-	local f = assert(io.open(filename, 'rb'))
-	local r = lni(f:read 'a')
-	f:close()
-	return r
-end
 
 local function EQUAL(a, b)
 	for k, v in pairs(a) do
