@@ -124,6 +124,15 @@ namespace w3x {
 			if (*(uint32_t*)buf != 'XLDM')
 				return;
 			buf += 4;
+			if (*(uint32_t*)buf != 'SREV')
+				return;
+			buf += 4;
+			if (*(uint32_t*)buf != 0x00000004)
+				return;
+			buf += 4;
+			if (*(uint32_t*)buf != 0x00000320)
+				return;
+			buf += 4;
 
 			for (; buf<end;)
 			{
