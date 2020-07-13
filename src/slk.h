@@ -186,7 +186,7 @@ namespace w3x {
 					const char* p = z;
 					if (*p == '"') {
 						p++;
-						for (; *p != '"'; ++p)
+						for (; *p != '"' && *p != '\n' && *p != '\r' && *p != '\0'; ++p)
 						{
 						}
 					}
