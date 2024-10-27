@@ -7,6 +7,7 @@
 #include <stdlib.h>	
 #include <vector>
 #include <lua.hpp> 
+#include <string>
 
 namespace w3x {
 
